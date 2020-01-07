@@ -7,12 +7,11 @@ const successState = data => ({ ...initialState, data });
 
 const WAIT_TIME = 2000;
 
-const useFakeFetch = () => {
+const useFakeFetch = data => {
     const [state, setState] = useState(loadingState);
 
     const fetchData = ({
-        data,
-        startDataOrder,
+        startDataOrder = 0,
         dataNumber,
         expectError = false,
     }) => {

@@ -18,13 +18,11 @@ const initialValue = {
 const ProductStore = ({ children }) => {
     const [product, dispatchProduct] = useReducer(ProductReducer, initialValue);
 
-    const [{ data }, fetchData] = useFakeFetch();
+    const [{ data }, fetchData] = useFakeFetch(ProductsDummyData);
 
     const handleFirstFetchData = () => {
-        const data = ProductsDummyData;
-        const startDataOrder = 0;
         const dataNumber = 10;
-        fetchData({ data, startDataOrder, dataNumber });
+        fetchData({ dataNumber });
     };
     const handleDataFetched = () => {
         if (!data) return;
