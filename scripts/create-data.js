@@ -30,11 +30,12 @@ const productTemplate = [
 
 const products = [...Array(productsNumber)].map((_, index) => {
     const productIndex = index % productTemplate.length;
+    const thumbnailIndex = (index % 55) + 1;
     const { name, price } = productTemplate[productIndex];
 
     return {
         id: index,
-        thumbnailPath: thumbnailPath(index),
+        thumbnailPath: thumbnailPath(thumbnailIndex),
         name,
         price: price + index,
     };
