@@ -9,14 +9,22 @@ export const ProductContext = createContext();
 const DEFAULT_TAB = 0;
 const DEFAULT_OPTION = 0;
 
+const defaultSort = (prev, next) => prev.id - next.id;
+const descendingSort = (prev, next) => next.price - prev.price;
+const ascendingSort = (prev, next) => prev.price - next.price;
+
 const initialValue = {
     selectedTab: DEFAULT_TAB,
     tabList: [
         { name: '상품 리스트', lastTopPosition: 0 },
         { name: '위시 리스트', lastTopPosition: 0 },
     ],
-    selectedOption: DEFAULT_OPTION,
-    sortOptionList: ['정렬 없음', '높은 가격 순서', '낮은 가격 순서'],
+    selectedSortOption: DEFAULT_OPTION,
+    sortOptionList: [
+        { name: '정렬 없음', method: defaultSort },
+        { name: '높은 가격 순서', method: descendingSort },
+        { name: '낮은 가격 순서', method: ascendingSort },
+    ],
     fetchedProducts: [],
     wishList: LocalStorage.getData('wishList')
         ? LocalStorage.getData('wishList')
