@@ -5,7 +5,7 @@ const loadingState = { ...initialState, loading: true };
 const errorState = { ...initialState, error: true };
 const successState = data => ({ ...initialState, data });
 
-const useFakeFetch = (data, fetchingTime = 1000) => {
+const useFakeFetch = (data, fetchingTime = 300) => {
     const [state, setState] = useState(initialState);
 
     const fetchData = ({
