@@ -21,6 +21,8 @@ export const Thumbnail = styled.img`
 
     object-position: center center;
     object-fit: cover;
+
+    background-color: gray;
 `;
 
 export const Name = styled.p`
