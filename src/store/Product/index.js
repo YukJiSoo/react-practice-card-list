@@ -6,7 +6,11 @@ import * as LocalStorage from 'utils/localStorage';
 
 export const ProductContext = createContext();
 
+const DEFAULT_TAB = 0;
+
 const initialValue = {
+    selectedTab: DEFAULT_TAB,
+    tabList: ['상품 리스트', '위시 리스트'],
     fetchedProducts: [],
     wishList: LocalStorage.getData('wishList')
         ? LocalStorage.getData('wishList')
