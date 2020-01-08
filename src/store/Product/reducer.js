@@ -28,11 +28,19 @@ const selectTab = (state, { newTabIndex, lastTopPosition }) => {
     };
 };
 
+const selectOption = (state, { newOptionIndex }) => {
+    return {
+        ...state,
+        selectedOption: Number(newOptionIndex),
+    };
+};
+
 const ProductReducer = (state, { type, payload }) => {
     const reducers = {
         [Actions.newProductsFetched]: newProductsFetched,
         [Actions.toggleWish]: toggleWish,
         [Actions.selectTab]: selectTab,
+        [Actions.selectOption]: selectOption,
     };
 
     const reducer = reducers[type];

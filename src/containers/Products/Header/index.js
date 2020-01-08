@@ -3,14 +3,18 @@ import { useContext } from 'react';
 import * as Styles from './style';
 
 import TabList from 'components/TabList';
+import OptionList from 'components/OptionList';
 
 import { ProductContext } from 'store/Product';
 
-import { selectTabActionCreator } from 'actions/Product';
+import {
+    selectTabActionCreator,
+    selectOptionActionCreator,
+} from 'actions/Product';
 
 const Header = () => {
     const {
-        product: { tabList, selectedTab },
+        product: { tabList, selectedTab, selectedOption, sortOptionList },
         dispatchProduct,
     } = useContext(ProductContext);
 
@@ -24,6 +28,14 @@ const Header = () => {
         dispatchProduct(selectTabAction);
     };
 
+    const handleSelectOption = e => {
+        const newOptionIndex = e.target.dataset.index;
+        const selectOptionAction = selectOptionActionCreator({
+            newOptionIndex,
+        });
+        dispatchProduct(selectOptionAction);
+    };
+
     return (
         <Styles.Header>
             <TabList
@@ -31,11 +43,11 @@ const Header = () => {
                 tabList={tabList.map(({ name }) => name)}
                 selectedTab={selectedTab}
             />
-            <Styles.SortOptions>
-                <Styles.SortOption>정렬 없음</Styles.SortOption>
-                <Styles.SortOption>높은 가격 순서</Styles.SortOption>
-                <Styles.SortOption>낮은 가격 순서</Styles.SortOption>
-            </Styles.SortOptions>
+            <OptionList
+                handleSelectOption={handleSelectOption}
+                optionList={sortOptionList}
+                selectedOption={selectedOption}
+            />
         </Styles.Header>
     );
 };
