@@ -16,7 +16,11 @@ const Header = () => {
 
     const handleSelectTab = e => {
         const newTabIndex = e.target.dataset.index;
-        const selectTabAction = selectTabActionCreator({ newTabIndex });
+        const lastTopPosition = window.scrollY;
+        const selectTabAction = selectTabActionCreator({
+            newTabIndex,
+            lastTopPosition,
+        });
         dispatchProduct(selectTabAction);
     };
 
@@ -24,7 +28,7 @@ const Header = () => {
         <Styles.Header>
             <TabList
                 handleSelectTab={handleSelectTab}
-                tabList={tabList}
+                tabList={tabList.map(({ name }) => name)}
                 selectedTab={selectedTab}
             />
             <Styles.SortOptions>

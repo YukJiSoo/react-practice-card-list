@@ -8,6 +8,9 @@ export const toggleWishActionCreator = ({ newWishList }) => {
     return { type: toggleWish, payload: { newWishList } };
 };
 
-export const selectTabActionCreator = ({ newTabIndex }) => {
-    return { type: selectTab, payload: { newTabIndex } };
+export const selectTabActionCreator = ({ newTabIndex, lastTopPosition }) => {
+    return {
+        type: selectTab,
+        payload: { newTabIndex, lastTopPosition },
+    };
 };

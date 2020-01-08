@@ -14,10 +14,19 @@ const toggleWish = (state, { newWishList }) => {
     };
 };
 
-const selectTab = (state, { newTabIndex }) => ({
-    ...state,
-    selectedTab: Number(newTabIndex),
-});
+const selectTab = (state, { newTabIndex, lastTopPosition }) => {
+    const selectedTab = state.selectedTab;
+    const tabList = state.tabList.map((tab, index) => {
+        if (selectedTab === index) return { ...tab, lastTopPosition };
+        return tab;
+    });
+
+    return {
+        ...state,
+        selectedTab: Number(newTabIndex),
+        tabList,
+    };
+};
 
 const ProductReducer = (state, { type, payload }) => {
     const reducers = {

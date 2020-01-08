@@ -10,7 +10,10 @@ const DEFAULT_TAB = 0;
 
 const initialValue = {
     selectedTab: DEFAULT_TAB,
-    tabList: ['상품 리스트', '위시 리스트'],
+    tabList: [
+        { name: '상품 리스트', lastTopPosition: 0 },
+        { name: '위시 리스트', lastTopPosition: 0 },
+    ],
     fetchedProducts: [],
     wishList: LocalStorage.getData('wishList')
         ? LocalStorage.getData('wishList')
