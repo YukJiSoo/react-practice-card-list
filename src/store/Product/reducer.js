@@ -7,9 +7,17 @@ const newProductsFetched = (state, { newProducts }) => {
     };
 };
 
+const toggleWish = (state, { newWishList }) => {
+    return {
+        ...state,
+        wishList: newWishList,
+    };
+};
+
 const ProductReducer = (state, { type, payload }) => {
     const reducers = {
         [Actions.newProductsFetched]: newProductsFetched,
+        [Actions.toggleWish]: toggleWish,
     };
 
     const reducer = reducers[type];

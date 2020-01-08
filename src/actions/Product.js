@@ -4,6 +4,6 @@ export const newProductsFetchedActionCreator = ({ newProducts }) => {
     return { type: newProductsFetched, payload: { newProducts } };
 };
 
-export const toggleWishActionCreator = ({ productId }) => {
-    return { type: toggleWish, payload: { productId } };
+export const toggleWishActionCreator = ({ newWishList }) => {
+    return { type: toggleWish, payload: { newWishList } };
 };

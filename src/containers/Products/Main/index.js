@@ -8,8 +8,13 @@ import ProductsDummyData from 'data/procucts';
 
 import { useFakeFetch, useIntersectionObserver } from 'hooks';
 
-import { newProductsFetchedActionCreator } from 'actions/Product';
+import {
+    newProductsFetchedActionCreator,
+    toggleWishActionCreator,
+} from 'actions/Product';
 import { ProductContext } from 'store/Product';
+
+import * as LocalStorage from 'utils/localStorage';
 
 const Main = () => {
     const { product, dispatchProduct } = useContext(ProductContext);
@@ -21,7 +26,7 @@ const Main = () => {
         handleIntersection,
     });
 
-    const { fetchedProducts } = product;
+    const { fetchedProducts, wishList } = product;
 
     function handleIntersection() {
         if (loading) return;
@@ -45,18 +50,37 @@ const Main = () => {
         dispatchProduct(newProductsFetchedAction);
     };
 
+    const handleToggleWish = id => isWish => {
+        const newWishList = isWish
+            ? Object.values(wishList)
+                  .filter(item => item.id !== id)
+                  .reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {})
+            : { ...wishList, [id]: fetchedProducts[id] };
+        LocalStorage.setData('wishList', newWishList);
+
+        const payload = { newWishList };
+        const toggleWishAction = toggleWishActionCreator(payload);
+        dispatchProduct(toggleWishAction);
+    };
+
     useEffect(handleDidMount, []);
     useEffect(handleDataFetched, [data]);
 
-    const Cards = fetchedProducts.map(({ id, thumbnailPath, name, price }) => (
-        <Card
-            key={id}
-            id={id}
-            thumbnailPath={thumbnailPath}
-            name={name}
-            price={price}
-        />
-    ));
+    const Cards = fetchedProducts.map(({ id, thumbnailPath, name, price }) => {
+        const isWish = wishList && wishList[id] ? true : false;
+
+        return (
+            <Card
+                key={id}
+                thumbnailPath={thumbnailPath}
+                name={name}
+                price={price}
+                isWish={isWish}
+                handleToggleWish={handleToggleWish(id, isWish)}
+            />
+        );
+    });
+
     return (
         <Styles.Main>
             <Styles.CardList>{Cards}</Styles.CardList>
