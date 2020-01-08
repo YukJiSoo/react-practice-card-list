@@ -26,12 +26,15 @@ const Main = () => {
         handleIntersection,
     });
 
-    const { fetchedProducts, wishList } = product;
+    const { fetchedProducts, wishList, selectedTab, tabList } = product;
+    const selectedProducts =
+        selectedTab === 0 ? fetchedProducts : Object.values(wishList);
 
     function handleIntersection() {
         if (loading) return;
+        if (selectedTab !== 0) return;
 
-        const startDataOrder = fetchedProducts.length;
+        const startDataOrder = selectedProducts.length;
         const dataNumber = 10;
         fetchData({ startDataOrder, dataNumber });
     }
@@ -55,7 +58,7 @@ const Main = () => {
             ? Object.values(wishList)
                   .filter(item => item.id !== id)
                   .reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {})
-            : { ...wishList, [id]: fetchedProducts[id] };
+            : { ...wishList, [id]: selectedProducts[id] };
         LocalStorage.setData('wishList', newWishList);
 
         const payload = { newWishList };
@@ -63,15 +66,21 @@ const Main = () => {
         dispatchProduct(toggleWishAction);
     };
 
+    const handleSelctTab = () => {
+        const top = tabList[selectedTab].lastTopPosition;
+        window.scrollTo(0, top);
+    };
+
     useEffect(handleDidMount, []);
     useEffect(handleDataFetched, [data]);
+    useEffect(handleSelctTab, [selectedTab]);
 
-    const Cards = fetchedProducts.map(({ id, thumbnailPath, name, price }) => {
+    const Cards = selectedProducts.map(({ id, thumbnailPath, name, price }) => {
         const isWish = wishList && wishList[id] ? true : false;
 
         return (
             <Card
-                key={id}
+                key={`card-${id}`}
                 thumbnailPath={thumbnailPath}
                 name={name}
                 price={price}
