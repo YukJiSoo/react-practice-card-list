@@ -14,10 +14,16 @@ const toggleWish = (state, { newWishList }) => {
     };
 };
 
+const selectTab = (state, { newTabIndex }) => ({
+    ...state,
+    selectedTab: Number(newTabIndex),
+});
+
 const ProductReducer = (state, { type, payload }) => {
     const reducers = {
         [Actions.newProductsFetched]: newProductsFetched,
         [Actions.toggleWish]: toggleWish,
+        [Actions.selectTab]: selectTab,
     };
 
     const reducer = reducers[type];
