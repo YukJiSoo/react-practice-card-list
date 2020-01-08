@@ -87,7 +87,7 @@ const Main = () => {
 
     const handleSelctTab = () => {
         const top = tabList[selectedTab].lastTopPosition;
-        window.scrollTo(0, top);
+        setTimeout(() => window.scrollTo(0, top), 0);
     };
 
     useEffect(handleDidMount, []);
