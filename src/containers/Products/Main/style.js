@@ -34,3 +34,8 @@ export const CardList = styled.section`
         margin: 0 5vw;
     }
 `;
+
+export const DataLoadZone = styled.div`
+    width: 100%;
+    height: 2rem;
+`;
