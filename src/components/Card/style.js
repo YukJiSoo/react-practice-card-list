@@ -39,7 +39,7 @@ export const Name = styled.p`
 `;
 
 export const Price = styled.div`
-    margin: 1rem;
+    margin: auto 1rem 1rem 1rem;
 
     font-weight: lighter;
     color: gray;

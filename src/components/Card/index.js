@@ -34,7 +34,7 @@ const Card = ({ thumbnailPath, name, price, isWish, handleToggleWish }) => {
             </Styles.WishWrapper>
             <Styles.Thumbnail ref={imgRef} data-src={thumbnailPath} />
             <Styles.Name>{name}</Styles.Name>
-            <Styles.Price>{price}</Styles.Price>
+            <Styles.Price>{price}원</Styles.Price>
         </Styles.Card>
     );
 };
