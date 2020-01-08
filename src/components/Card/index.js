@@ -1,37 +1,29 @@
 import * as React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import * as Styles from './style';
 
 import Wish from 'components/Wish';
 
+import { useIntersectionObserver } from 'hooks';
+
 const WISH_COMPONENT_SIZE = '1.5rem';
 
 const Card = ({ id, thumbnailPath, name, price }) => {
-    const imgRef = useRef();
+    const imgRef = useRef(null);
+    const setTarget = useIntersectionObserver({
+        rootMargin: '5%',
+        handleIntersection,
+    });
 
-    const handleLazyLoadImage = () => {
-        const options = {
-            root: null,
-            rootMargin: '100px',
-            threshold: 0,
-        };
-        const handleInIntersecting = (observer, entry) => {
-            const { target } = entry;
-            if (!entry.isIntersecting) return;
-            target.src = target.dataset.src;
-            observer.unobserve(target);
-        };
-        const callbackFunction = (entries, observer) => {
-            entries.forEach(handleInIntersecting.bind(undefined, observer));
-        };
+    function handleIntersection(target, observer) {
+        target.src = target.dataset.src;
+        observer.unobserve(target);
+    }
 
-        const observer = new IntersectionObserver(callbackFunction, options);
-        observer.observe(imgRef.current);
+    useEffect(() => {
+        setTarget(imgRef.current);
+    }, [imgRef.current]);
 
-        return () => observer && observer.disconnect();
-    };
-
-    useEffect(handleLazyLoadImage, []);
     return (
         <Styles.Card>
             <Styles.WishWrapper>
