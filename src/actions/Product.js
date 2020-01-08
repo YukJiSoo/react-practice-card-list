@@ -1,4 +1,9 @@
-import { newProductsFetched, toggleWish, selectTab } from './types';
+import {
+    newProductsFetched,
+    toggleWish,
+    selectTab,
+    selectOption,
+} from './types';
 
 export const newProductsFetchedActionCreator = ({ newProducts }) => {
     return { type: newProductsFetched, payload: { newProducts } };
@@ -13,4 +18,8 @@ export const selectTabActionCreator = ({ newTabIndex, lastTopPosition }) => {
         type: selectTab,
         payload: { newTabIndex, lastTopPosition },
     };
+};
+
+export const selectOptionActionCreator = ({ newOptionIndex }) => {
+    return { type: selectOption, payload: { newOptionIndex } };
 };
