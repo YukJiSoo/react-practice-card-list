@@ -39,3 +39,13 @@ export const DataLoadZone = styled.div`
     width: 100%;
     height: 2rem;
 `;
+
+export const EmptyContents = styled.h1`
+    margin-top: 6rem;
+
+    font-size: 3rem;
+    font-weight: lighter;
+    text-align: center;
+
+    color: #2b96ed;
+`;

@@ -16,6 +16,8 @@ import { ProductContext } from 'store/Product';
 
 import * as LocalStorage from 'utils/localStorage';
 
+const NO_WISH_ITEMS_PHRASE = '담긴 상품이 없습니다 😨';
+
 const Main = () => {
     const { product, dispatchProduct } = useContext(ProductContext);
     const dataLoadZoneRef = useRef();
@@ -115,8 +117,15 @@ const Main = () => {
         );
     });
 
+    const isNoWishItems = !loading && !Cards.length && selectedTab === 1;
+
     return (
         <Styles.Main>
+            {isNoWishItems && (
+                <Styles.EmptyContents>
+                    {NO_WISH_ITEMS_PHRASE}
+                </Styles.EmptyContents>
+            )}
             <Styles.CardList>{Cards}</Styles.CardList>
             <Styles.DataLoadZone ref={dataLoadZoneRef} />
         </Styles.Main>
