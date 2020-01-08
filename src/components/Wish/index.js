@@ -1,8 +1,16 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
-const Wish = ({ isTrue, onClickCapture, size }) =>
-    isTrue ? (
+const Wish = ({ intialWish, handleToggleWish, size }) => {
+    const [toggle, setToggle] = useState(intialWish);
+
+    const onClickCapture = () => {
+        handleToggleWish(toggle);
+        setToggle(!toggle);
+    };
+
+    return toggle ? (
         <FaHeart
             onClickCapture={onClickCapture}
             size={size}
@@ -11,5 +19,5 @@ const Wish = ({ isTrue, onClickCapture, size }) =>
     ) : (
         <FaRegHeart onClickCapture={onClickCapture} size={size} />
     );
-
+};
 export default Wish;
