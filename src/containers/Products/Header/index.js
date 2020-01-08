@@ -1,13 +1,32 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import * as Styles from './style';
 
+import TabList from 'components/TabList';
+
+import { ProductContext } from 'store/Product';
+
+import { selectTabActionCreator } from 'actions/Product';
+
 const Header = () => {
+    const {
+        product: { tabList, selectedTab },
+        dispatchProduct,
+    } = useContext(ProductContext);
+
+    const handleSelectTab = e => {
+        const newTabIndex = e.target.dataset.index;
+        const selectTabAction = selectTabActionCreator({ newTabIndex });
+        dispatchProduct(selectTabAction);
+    };
+
     return (
         <Styles.Header>
-            <Styles.Tabs>
-                <Styles.Tab>상품 리스트</Styles.Tab>
-                <Styles.Tab>위시 리스트</Styles.Tab>
-            </Styles.Tabs>
+            <TabList
+                handleSelectTab={handleSelectTab}
+                tabList={tabList}
+                selectedTab={selectedTab}
+            />
             <Styles.SortOptions>
                 <Styles.SortOption>정렬 없음</Styles.SortOption>
                 <Styles.SortOption>높은 가격 순서</Styles.SortOption>
