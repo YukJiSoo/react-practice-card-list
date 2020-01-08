@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import * as Styles from './style';
 
 import Card from 'components/Card';
@@ -19,6 +19,7 @@ import * as LocalStorage from 'utils/localStorage';
 const Main = () => {
     const { product, dispatchProduct } = useContext(ProductContext);
     const dataLoadZoneRef = useRef();
+    const [selectedProducts, setSelectedProducts] = useState([]);
 
     const [{ loading, data }, fetchData] = useFakeFetch(ProductsDummyData);
     const setTarget = useIntersectionObserver({
@@ -27,8 +28,6 @@ const Main = () => {
     });
 
     const { fetchedProducts, wishList, selectedTab, tabList } = product;
-    const selectedProducts =
-        selectedTab === 0 ? fetchedProducts : Object.values(wishList);
 
     function handleIntersection() {
         if (loading) return;
@@ -53,6 +52,12 @@ const Main = () => {
         dispatchProduct(newProductsFetchedAction);
     };
 
+    const handleUpdateProducts = () => {
+        const newProducts =
+            selectedTab === 0 ? fetchedProducts : Object.values(wishList);
+        setSelectedProducts(newProducts);
+    };
+
     const handleToggleWish = id => isWish => {
         const newWishList = isWish
             ? Object.values(wishList)
@@ -73,6 +78,7 @@ const Main = () => {
 
     useEffect(handleDidMount, []);
     useEffect(handleDataFetched, [data]);
+    useEffect(handleUpdateProducts, [fetchedProducts, wishList, selectedTab]);
     useEffect(handleSelctTab, [selectedTab]);
 
     const Cards = selectedProducts.map(({ id, thumbnailPath, name, price }) => {
