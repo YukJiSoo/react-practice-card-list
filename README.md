@@ -78,6 +78,32 @@ UI를 구성하는 가장 작은 단위입니다.
 
 ### ❓ 상태관리
 
+해당 프로젝트에서 사용된 Product context의 state는 다음과 같습니다.
+
+```js
+{
+    selectedTab: DEFAULT_TAB,
+    tabList: [
+        { name: '상품 리스트', lastTopPosition: 0 },
+        { name: '위시 리스트', lastTopPosition: 0 },
+    ],
+    selectedSortOption: DEFAULT_OPTION,
+    sortOptionList: [
+        { name: '정렬 없음', method: defaultSort },
+        { name: '높은 가격 순서', method: descendingSort },
+        { name: '낮은 가격 순서', method: ascendingSort },
+    ],
+    fetchedProducts: [ { id, name, price, thumbnailPath } ],
+    wishList: { [id]: { id, name, price, thumbnailPath } }
+};
+```
+
+> wishList는 local storage에 저장하여 관리 했습니다. 서버와 통신을 한다고 가정할 때,
+>
+> 추가/제거가 빈번해지면 서버에 부하가 많을 것으로 생각했고
+>
+> 개인이 선호하는 상품 데이터를 이용하여 분석을 하지 않는다면 DB에서 관리할 필요가 없다고 생각했습니다.
+
 상태관리 또한 UI 구현에 생각했던 것과 마찬가지로 역할을 나누고자 했습니다.
 react의 contextAPI와 hooks를 사용하여 구현하였고 크게 `action`, `store`, `reducer`, `dispatch`가 상태관리 역할을 분담하도록 했습니다.
 
