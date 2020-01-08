@@ -5,10 +5,8 @@ const loadingState = { ...initialState, loading: true };
 const errorState = { ...initialState, error: true };
 const successState = data => ({ ...initialState, data });
 
-const WAIT_TIME = 2000;
-
-const useFakeFetch = data => {
-    const [state, setState] = useState(loadingState);
+const useFakeFetch = (data, fetchingTime = 1000) => {
+    const [state, setState] = useState(initialState);
 
     const fetchData = ({
         startDataOrder = 0,
@@ -18,14 +16,17 @@ const useFakeFetch = data => {
         setState(loadingState);
         const handleReturnError = () => setState(errorState);
         const handleReturnSuccess = () => {
-            const result = data.slice(startDataOrder, dataNumber);
+            const result = data.slice(
+                startDataOrder,
+                startDataOrder + dataNumber
+            );
             setState(successState(result));
         };
 
         const fetchDataFake = expectError
             ? handleReturnError
             : handleReturnSuccess;
-        setTimeout(fetchDataFake, WAIT_TIME);
+        setTimeout(fetchDataFake, fetchingTime);
     };
 
     return [state, fetchData];
