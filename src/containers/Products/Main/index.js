@@ -27,7 +27,14 @@ const Main = () => {
         handleIntersection,
     });
 
-    const { fetchedProducts, wishList, selectedTab, tabList } = product;
+    const {
+        fetchedProducts,
+        wishList,
+        selectedTab,
+        tabList,
+        selectedSortOption,
+        sortOptionList,
+    } = product;
 
     function handleIntersection() {
         if (loading) return;
@@ -53,8 +60,12 @@ const Main = () => {
     };
 
     const handleUpdateProducts = () => {
-        const newProducts =
+        let newProducts =
             selectedTab === 0 ? fetchedProducts : Object.values(wishList);
+        newProducts = [...newProducts].sort(
+            sortOptionList[selectedSortOption].method
+        );
+
         setSelectedProducts(newProducts);
     };
 
@@ -63,7 +74,10 @@ const Main = () => {
             ? Object.values(wishList)
                   .filter(item => item.id !== id)
                   .reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {})
-            : { ...wishList, [id]: selectedProducts[id] };
+            : {
+                  ...wishList,
+                  [id]: selectedProducts.filter(item => item.id === id)[0],
+              };
         LocalStorage.setData('wishList', newWishList);
 
         const payload = { newWishList };
@@ -78,7 +92,12 @@ const Main = () => {
 
     useEffect(handleDidMount, []);
     useEffect(handleDataFetched, [data]);
-    useEffect(handleUpdateProducts, [fetchedProducts, wishList, selectedTab]);
+    useEffect(handleUpdateProducts, [
+        fetchedProducts,
+        wishList,
+        selectedTab,
+        selectedSortOption,
+    ]);
     useEffect(handleSelctTab, [selectedTab]);
 
     const Cards = selectedProducts.map(({ id, thumbnailPath, name, price }) => {

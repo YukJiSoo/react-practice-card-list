@@ -14,7 +14,7 @@ import {
 
 const Header = () => {
     const {
-        product: { tabList, selectedTab, selectedOption, sortOptionList },
+        product: { tabList, selectedTab, selectedSortOption, sortOptionList },
         dispatchProduct,
     } = useContext(ProductContext);
 
@@ -45,8 +45,8 @@ const Header = () => {
             />
             <OptionList
                 handleSelectOption={handleSelectOption}
-                optionList={sortOptionList}
-                selectedOption={selectedOption}
+                optionList={sortOptionList.map(({ name }) => name)}
+                selectedOption={selectedSortOption}
             />
         </Styles.Header>
     );

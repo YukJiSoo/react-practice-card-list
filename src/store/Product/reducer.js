@@ -31,7 +31,7 @@ const selectTab = (state, { newTabIndex, lastTopPosition }) => {
 const selectOption = (state, { newOptionIndex }) => {
     return {
         ...state,
-        selectedOption: Number(newOptionIndex),
+        selectedSortOption: Number(newOptionIndex),
     };
 };
 
